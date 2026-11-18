@@ -39,7 +39,10 @@ git clone <repositorio>; cd <repositorio>
 cdf init                      # pregunta el stack: web, mobile, integration, todas
 cdf init --stack web,integration   # sin preguntas
 cdf verify                    # Estado: APROBADO y FAILS: 0
+claude                        # la primera vez, acepta el aviso de confianza de la carpeta
 ```
+
+> La primera vez que abras `claude` en el proyecto, acepta el aviso de confianza. Mientras no lo aceptes, Claude Code ignora los permisos de `.claude/settings.json` (por ejemplo `Bash(cdf:*)`).
 
 Estructura generada:
 

@@ -73,6 +73,13 @@ const abs = path.resolve(ROOT, file);
 const rel = path.relative(ROOT, abs).split(path.sep).join('/');
 const base = path.basename(abs);
 
+// 0. Lectura: solo se protege el material sensible (.env*, salvo .env.example, y llaves)
+if (tool === 'Read') {
+  if (/^\.env(\..+)?$/.test(base) && !/\.example$/.test(base)) block(`No se permite leer ${rel}: puede contener secretos. Usa .env.example como referencia.`);
+  if (/\.(pem|key|pfx|p12)$/i.test(base) || /^id_(rsa|ed25519)/.test(base)) block(`No se permite leer material criptográfico (${rel}).`);
+  process.exit(0);
+}
+
 // 1. Archivos sensibles
 if (/^\.env(\..+)?$/.test(base) && !/\.example$/.test(base)) block(`No se permite escribir ${rel}. Usa .env.example con valores de ejemplo.`);
 if (/\.(pem|key|pfx|p12)$/i.test(base) || /^id_(rsa|ed25519)/.test(base)) block(`No se permite escribir material criptográfico (${rel}).`);
